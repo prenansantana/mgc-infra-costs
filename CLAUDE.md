@@ -34,8 +34,23 @@ go run ./cmd/mgc-infra-costs breakdown --plan testdata/sample-plan.json --format
 - Output JSON follows Infracost schema v0.2
 - Currency is BRL (from the API)
 
+## Release
+
+- GoReleaser config: `.goreleaser.yml`
+- GitHub Action: `.github/workflows/release.yml` — triggers on `v*` tags
+- Publishes binaries (linux/darwin × amd64/arm64) + Homebrew formula to `prenansantana/homebrew-tap`
+- Requires `GORELEASER_TOKEN` secret in GitHub repo settings
+
+To release: `git tag vX.Y.Z && git push origin vX.Y.Z`
+
 ## Adding a new resource type
 
 1. Create `internal/resources/{name}.go` implementing `ResourceHandler`
 2. Add to `supportedTypes` in `internal/parser/tfplan.go`
 3. Register in `internal/resources/registry.go` init()
+
+## Documentation rule
+
+When making changes to features, supported resources, CLI flags, or architecture, update both:
+- `README.md` (documentação para humanos, em português)
+- `CLAUDE.md` (documentação para IA)

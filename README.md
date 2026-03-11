@@ -6,11 +6,20 @@ Busca preços em tempo real da API da calculadora MGC e gera tabelas no terminal
 
 ## Instalação
 
+### Homebrew
+
+```bash
+brew tap prenansantana/tap
+brew install mgc-infra-costs
+```
+
+### Go install
+
 ```bash
 go install github.com/prenansantana/mgc-infra-costs/cmd/mgc-infra-costs@latest
 ```
 
-Ou compile a partir do código fonte:
+### A partir do código fonte
 
 ```bash
 git clone https://github.com/prenansantana/mgc-infra-costs.git
@@ -82,6 +91,19 @@ Não requer autenticação. Preços em BRL com impostos inclusos.
 ## Integração CI/CD
 
 A saída `--format json` é compatível com o schema JSON do Infracost (`version: 0.2`), permitindo integração com ferramentas de CI/CD que consomem output do Infracost.
+
+## Release
+
+Releases são gerados automaticamente via GitHub Actions + GoReleaser ao criar uma tag:
+
+```bash
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+Isso gera binários para linux/darwin (amd64/arm64), cria o GitHub Release e atualiza a fórmula Homebrew automaticamente.
+
+Requer o secret `GORELEASER_TOKEN` configurado no repositório com permissões de escrita no repo e no `prenansantana/homebrew-tap`.
 
 ## Licença
 
