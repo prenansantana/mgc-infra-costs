@@ -1,16 +1,16 @@
 # mgc-infra-costs
 
-Estimate Magalu Cloud infrastructure costs from Terraform plans.
+Estimativa de custos de infraestrutura Magalu Cloud a partir de planos Terraform.
 
-Fetches live pricing from the MGC calculator API and produces terminal tables or Infracost-compatible JSON for CI/CD integration.
+Busca preços em tempo real da API da calculadora MGC e gera tabelas no terminal ou JSON compatível com Infracost para integração CI/CD.
 
-## Install
+## Instalação
 
 ```bash
 go install github.com/prenansantana/mgc-infra-costs/cmd/mgc-infra-costs@latest
 ```
 
-Or build from source:
+Ou compile a partir do código fonte:
 
 ```bash
 git clone https://github.com/prenansantana/mgc-infra-costs.git
@@ -18,24 +18,24 @@ cd mgc-infra-costs
 go build -o mgc-infra-costs ./cmd/mgc-infra-costs
 ```
 
-## Usage
+## Uso
 
 ```bash
-# Generate Terraform plan JSON
+# Gerar JSON do plano Terraform
 terraform plan -out=tfplan
 terraform show -json tfplan > plan.json
 
-# Table output (default)
+# Saída em tabela (padrão)
 mgc-infra-costs breakdown --plan plan.json
 
-# Infracost-compatible JSON
+# JSON compatível com Infracost
 mgc-infra-costs breakdown --plan plan.json --format json
 
-# Specify region
+# Especificar região
 mgc-infra-costs breakdown --plan plan.json --region br-se1
 ```
 
-### Example output
+### Exemplo de saída
 
 ```
  Name                                                                                          Monthly Cost
@@ -47,42 +47,42 @@ mgc-infra-costs breakdown --plan plan.json --region br-se1
  module.database.mgc_dbaas_instances.this
    └─ DBaaS PostgreSQL single_instance (1 vCPU; 4GB RAM; 10GB Disk)                          R$ 94.22
  module.storage.mgc_object_storage_buckets.this
-   └─ Object Storage Standard (usage-based, R$ 0.10/GB/month)                                R$ 0.00
+   └─ Object Storage Standard (usage-based, R$ 0.10/GB/mês)                                  R$ 0.00
  ────────────────────────────────────────────────────────────                                  ───────────────
  TOTAL MONTHLY COST                                                                           R$ 347.20
 ```
 
-## Supported resources
+## Recursos suportados
 
-| Terraform Resource | Description |
+| Recurso Terraform | Descrição |
 |---|---|
-| `mgc_virtual_machine_instances` | Virtual Machines (all BV/DP flavors) |
+| `mgc_virtual_machine_instances` | Máquinas Virtuais (todos os flavors BV/DP) |
 | `mgc_block_storage_volumes` | Block Storage (NVMe 1K/5K/etc) |
 | `mgc_dbaas_instances` | Database as a Service (MySQL, PostgreSQL) |
-| `mgc_network_public_ips` | Public IPs (no allocation charge) |
-| `mgc_object_storage_buckets` | Object Storage (usage-based) |
+| `mgc_network_public_ips` | IPs Públicos (sem custo de alocação) |
+| `mgc_object_storage_buckets` | Object Storage (custo por uso) |
 
-## Machine type formats
+## Formatos de machine type
 
-Both formats are supported:
+Ambos os formatos são suportados:
 
-- Short format: `BV2-4-20` (class + vCPU + RAM + disk)
+- Formato curto: `BV2-4-20` (classe + vCPU + RAM + disco)
 - Flavor name: `i1-c2-r4-d20`
 
-## Pricing source
+## Fonte de preços
 
-Prices are fetched live from the Magalu Cloud calculator API:
+Os preços são buscados em tempo real da API da calculadora Magalu Cloud:
 
 ```
 GET https://calculadora.magalu.cloud/api/sku/v0/skus/region={region}.json
 ```
 
-No authentication required. Prices are in BRL with taxes included.
+Não requer autenticação. Preços em BRL com impostos inclusos.
 
-## CI/CD Integration
+## Integração CI/CD
 
-The `--format json` output is compatible with Infracost's JSON schema (`version: 0.2`), enabling integration with existing CI/CD tools that consume Infracost output.
+A saída `--format json` é compatível com o schema JSON do Infracost (`version: 0.2`), permitindo integração com ferramentas de CI/CD que consomem output do Infracost.
 
-## License
+## Licença
 
 MIT
