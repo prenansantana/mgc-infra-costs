@@ -6,6 +6,9 @@
 .vscode/
 *.swp
 
+# GoReleaser
+dist/
+
 # OS
 .DS_Store
 
