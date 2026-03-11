@@ -1,0 +1,102 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "planned_values": {
+    "root_module": {
+      "child_modules": [
+        {
+          "address": "module.vm_n8n",
+          "resources": [
+            {
+              "address": "module.vm_n8n.mgc_virtual_machine_instances.this",
+              "mode": "managed",
+              "type": "mgc_virtual_machine_instances",
+              "name": "this",
+              "provider_name": "registry.terraform.io/magalucloud/mgc",
+              "values": {
+                "name": "digital-iara-prd-n8n",
+                "machine_type": "BV2-4-20",
+                "image": "cloud-ubuntu-24.04 LTS",
+                "ssh_key_name": "digital-iara-prd-key",
+                "allocate_public_ipv4": true
+              }
+            }
+          ]
+        },
+        {
+          "address": "module.vm_chatwoot",
+          "resources": [
+            {
+              "address": "module.vm_chatwoot.mgc_virtual_machine_instances.this",
+              "mode": "managed",
+              "type": "mgc_virtual_machine_instances",
+              "name": "this",
+              "provider_name": "registry.terraform.io/magalucloud/mgc",
+              "values": {
+                "name": "digital-iara-prd-chatwoot",
+                "machine_type": "BV4-8-20",
+                "image": "cloud-ubuntu-24.04 LTS",
+                "ssh_key_name": "digital-iara-prd-key",
+                "allocate_public_ipv4": true
+              }
+            }
+          ]
+        },
+        {
+          "address": "module.vm_waha",
+          "resources": [
+            {
+              "address": "module.vm_waha.mgc_virtual_machine_instances.this",
+              "mode": "managed",
+              "type": "mgc_virtual_machine_instances",
+              "name": "this",
+              "provider_name": "registry.terraform.io/magalucloud/mgc",
+              "values": {
+                "name": "digital-iara-prd-waha",
+                "machine_type": "BV2-4-20",
+                "image": "cloud-ubuntu-24.04 LTS",
+                "ssh_key_name": "digital-iara-prd-key",
+                "allocate_public_ipv4": true
+              }
+            }
+          ]
+        },
+        {
+          "address": "module.database",
+          "resources": [
+            {
+              "address": "module.database.mgc_dbaas_instances.this",
+              "mode": "managed",
+              "type": "mgc_dbaas_instances",
+              "name": "this",
+              "provider_name": "registry.terraform.io/magalucloud/mgc",
+              "values": {
+                "name": "digital-iara-prd-db01",
+                "engine_name": "postgresql",
+                "engine_version": "16",
+                "instance_type": "BV1-4-10",
+                "volume_size": 50
+              }
+            }
+          ]
+        },
+        {
+          "address": "module.storage",
+          "resources": [
+            {
+              "address": "module.storage.mgc_object_storage_buckets.this",
+              "mode": "managed",
+              "type": "mgc_object_storage_buckets",
+              "name": "this",
+              "provider_name": "registry.terraform.io/magalucloud/mgc",
+              "values": {
+                "bucket": "digital-iara-prd-storage"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "resource_changes": []
+}

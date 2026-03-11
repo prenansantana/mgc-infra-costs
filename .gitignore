@@ -1,0 +1,13 @@
+# Binary (root only, not cmd/ directory)
+/mgc-infra-costs
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+# Conductor
+.context/
