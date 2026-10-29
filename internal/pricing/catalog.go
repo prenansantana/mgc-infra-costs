@@ -3,6 +3,7 @@ package pricing
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 type Catalog struct {
@@ -56,6 +57,9 @@ func (c *Catalog) LookupBySpecs(product, classPrefix string, vcpu, ramGB, diskGB
 	if !ok {
 		return nil, fmt.Errorf("product %q not found in catalog", product)
 	}
+	// Iteração ordenada: o catálogo é um mapa e um mesmo tamanho tem variantes
+	// (ex.: i1-c2-r8-d20 e i1-c2-r8-d20-win); escolhe-se sempre a Linux, de nome mais curto.
+	var best *SKU
 	for _, sku := range products {
 		if sku.VCPUs != vcpu || sku.RAM == nil || sku.Disk == nil {
 			continue
@@ -70,7 +74,16 @@ func (c *Catalog) LookupBySpecs(product, classPrefix string, vcpu, ramGB, diskGB
 				continue
 			}
 		}
-		return &sku, nil
+		if strings.HasSuffix(sku.FlavorName, "-win") {
+			continue
+		}
+		s := sku
+		if best == nil || s.FlavorName < best.FlavorName {
+			best = &s
+		}
+	}
+	if best != nil {
+		return best, nil
 	}
 	return nil, fmt.Errorf("no SKU found in %q matching class=%s vcpu=%d ram=%dGB disk=%dGB", product, classPrefix, vcpu, ramGB, diskGB)
 }
