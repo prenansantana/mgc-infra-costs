@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-const defaultBaseURL = "https://calculadora.magalu.cloud/api/sku/v0/skus"
+// A calculadora passou a servir os SKUs em api.magalu.cloud; o endereço antigo
+// (calculadora.magalu.cloud/api/sku/v0/skus/region=<r>.json) redireciona para a página de preços.
+const defaultBaseURL = "https://api.magalu.cloud/sku/v0/skus"
 
 type RAM struct {
 	Value int    `json:"value"`
@@ -61,7 +63,7 @@ func NewClient() *Client {
 }
 
 func (c *Client) FetchPricing(region string) ([]ProductCategory, error) {
-	url := fmt.Sprintf("%s/region=%s.json", c.baseURL, region)
+	url := fmt.Sprintf("%s?region=%s", c.baseURL, region)
 
 	resp, err := c.httpClient.Get(url)
 	if err != nil {
